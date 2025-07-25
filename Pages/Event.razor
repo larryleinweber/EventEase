@@ -1,0 +1,123 @@
+@page "/event/{UserName}"
+
+@inject IJSRuntime JS
+@inject EventService EventService
+@using System.Text.Json;
+@inject NavigationManager Nav
+
+@code {
+    private List<EventCard> events = new();
+
+    [Parameter]
+    public string? userName { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        events = EventService._events;
+        await LoadEvents();
+    }
+
+    private async Task SaveEvents()
+    {
+        var json = JsonSerializer.Serialize(events);
+        await JS.InvokeVoidAsync("localStorageInterop.saveEvent", "events", json);
+    }
+
+    private async Task LoadEvents()
+    {
+        var json = await JS.InvokeAsync<string>("localStorageInterop.getEvent", "events");
+        if (!string.IsNullOrEmpty(json))
+        {
+            events = JsonSerializer.Deserialize<List<EventCard>>(json) ?? new();
+            events = events.DistinctBy(u => u.Id).ToList();
+
+        }
+    }
+
+    private void GoToDetails(int eventId)
+    {
+        Nav.NavigateTo($"/event-details/{userName}/{eventId}");
+    }
+
+    private void GoToRegistration(int eventId)
+    {
+        Nav.NavigateTo($"/event-registration/{userName}/{eventId}");
+    }
+
+    private void LogOut()
+    {
+        Nav.NavigateTo("/");
+    }
+
+    private async void DeleteEvent(int eventId)
+    {
+        var eventToRemove = events.Find(u => u.Id == eventId);
+        if (eventToRemove == null) return;
+        events.Remove(eventToRemove);
+        await SaveEvents();
+        StateHasChanged();
+    }
+
+    private async void AddNewEvent()
+    {
+        var newEvent = new EventCard
+        {
+            Name = "New Event",
+            Date = DateTime.Today,
+            Location = "TBD",
+            Details = "Event details...",
+            RegistrationInfo = "Registration info..."
+        };
+        int maxId = events.Count == 0? 0: events.Max(u => u.Id);
+        newEvent.Id = maxId + 1; // Ensure unique ID
+        events.Add(newEvent);
+        await SaveEvents();
+        StateHasChanged();
+    }
+}
+
+<h2>All Events</h2>
+
+@if (events.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evt in events)
+            {
+                <tr @key="evt.Id">
+                    <td>@evt.Name</td>
+                    <td>@evt.Date.ToShortDateString()</td>
+                    <td>@evt.Location</td>
+                    <td>
+                        <button @onclick="() => GoToDetails(evt.Id)">Details</button>
+                    </td>
+                    <td>
+                        <button @onclick="() => GoToRegistration(evt.Id)">Registration</button>
+                    </td>
+                    <td>
+                        <button @onclick="() => DeleteEvent(evt.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+    <button @onclick="AddNewEvent">Add New Event</button>
+}
+else
+{
+    <p>No events found.</p>
+    <button @onclick="AddNewEvent">Add New Event</button>
+}
+<br><br>
+<button @onclick="LogOut">Log Out</button>

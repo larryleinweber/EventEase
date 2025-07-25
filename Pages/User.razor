@@ -1,0 +1,119 @@
+@inject IJSRuntime JS
+@inject NavigationManager Nav
+@using System.Text.Json;
+
+
+@page "/"
+
+<h3>User Selection</h3>
+
+@if (users.Any())
+{
+    <label>Select User:</label>
+    <select @onchange="SelectUser">
+        <option value="">-- Choose a user --</option>
+        @foreach (var user in users)
+        {
+            <option value="@user.Name">@user.Name (@user.Email)</option>
+        }
+    </select>
+    <br>
+}
+
+@if (users.Any())
+{
+    <br>
+    <h3>Registered Users</h3>
+
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Last Login</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@(user.LastLogin != DateTime.MinValue
+        ? user.LastLogin.ToString("g") 
+        : "Not yet")</td> <!-- Short date/time format -->
+            </tr>
+        }
+    </tbody>
+</table>
+}
+else
+{
+    <br>
+    <p>No users found.</p>
+}
+
+<br>
+<h4>Add New User</h4>
+
+    <EditForm Model="@newUser" OnValidSubmit="AddUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText @bind-Value="newUser.Name" placeholder="Name" />
+    <ValidationMessage For="@(() => newUser.Name)" />
+
+    <InputText @bind-Value="newUser.Email" placeholder="Email" />
+    <ValidationMessage For="@(() => newUser.Email)" />
+
+    <button type="submit">Save</button>
+    </EditForm>
+
+@code {
+    private List<UserInfo> users = new();
+    private UserInfo newUser = new();
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUsers();
+    }
+
+    private async Task AddUser()
+    {
+        users.Add(newUser);
+        await SaveUsers();
+        newUser = new();
+    }
+
+    private async Task SaveUsers()
+    {
+        var json = JsonSerializer.Serialize(users);
+        await JS.InvokeVoidAsync("localStorageInterop.saveUser", "users", json);
+    }
+
+    private async Task LoadUsers()
+    {
+        var json = await JS.InvokeAsync<string>("localStorageInterop.getUser", "users");
+        if (!string.IsNullOrEmpty(json))
+        {
+            users = JsonSerializer.Deserialize<List<UserInfo>>(json) ?? new();
+        }
+    }
+
+    private async void SelectUser(ChangeEventArgs e)
+    {
+        var name = e.Value?.ToString();
+        var selectedUser = users.FirstOrDefault(u => u.Name == name);
+
+        if (selectedUser != null)
+        {
+            selectedUser.LastLogin = DateTime.Now;
+            await SaveUsers(); // Resave with updated login time
+
+            Nav.NavigateTo($"/event/{selectedUser.Name}");
+        }
+    }
+}
+<br>
+<p>Brief summary of how Copilot assisted in each step of the development process:
+    I used it to create the initial code for the components, refined its suggestions
+     interactively and used it to help debug the code and to optimize it.</p>

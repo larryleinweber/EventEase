@@ -1,0 +1,126 @@
+@page "/event-details/{UserName}/{EventId:int}"
+
+@using System.Text.Json;
+@inject IJSRuntime JS
+
+@inject EventService EventService
+@inject NavigationManager NavigationManager
+
+@using System.ComponentModel.DataAnnotations
+
+@code {
+    [Parameter]
+    public string? userName { get; set; }
+
+    [Parameter]
+    public int EventId { get; set; }
+    public EventCard currentEvent { get; set; } = new EventCard();
+    private string? errorMessage;
+    private List<EventCard> events = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        errorMessage = null;
+        events = EventService._events;
+        await LoadEvents();
+        int i = events.FindIndex(u => u.Id == EventId);
+        if (i == -1) return;
+        currentEvent = events[i];
+    }
+
+    private async Task SaveEvents()
+    {
+        var json = JsonSerializer.Serialize(events);
+        await JS.InvokeVoidAsync("localStorageInterop.saveEvent", "events", json);
+    }
+
+    private async Task LoadEvents()
+    {
+        var json = await JS.InvokeAsync<string>("localStorageInterop.getEvent", "events");
+        if (!string.IsNullOrEmpty(json))
+        {
+            events = JsonSerializer.Deserialize<List<EventCard>>(json) ?? new();
+            events = events.DistinctBy(u => u.Id).ToList();
+
+        }
+    }
+
+
+    protected async void setParameters()
+    {
+        int i = events.FindIndex(u => u.Id == EventId);
+        if (i == -1) return;
+        events[i] = currentEvent;
+        await SaveEvents();
+        errorMessage = null;
+    }
+
+    private void Update()
+    {
+        if (!ValidateInputs()) return;
+        setParameters();
+    }
+
+    private void GoToRegistration()
+    {
+        if (!ValidateInputs()) return;
+        setParameters();
+        NavigationManager.NavigateTo($"/event-registration/{userName}/{EventId}");
+    }
+
+    private void GoToEventList()
+    {
+        if (!ValidateInputs()) return;
+        setParameters();
+        NavigationManager.NavigateTo($"/event/{userName}");
+    }
+
+    private bool ValidateInputs()
+    {
+        errorMessage = null;
+        if (string.IsNullOrWhiteSpace(currentEvent.Name))
+        {
+            errorMessage = "Name is required.";
+            return false;
+        }
+        if (currentEvent.Date == default)
+        {
+            errorMessage = "Date is required.";
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(currentEvent.Location))
+        {
+            errorMessage = "Location is required.";
+            return false;
+        }
+        return true;
+    }
+}
+
+    <h3>Event Details</h3>
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div style="color:red">@errorMessage</div>
+    }
+    <table>
+    <tr>
+        <td><label>Name:</label></td>
+        <td><input @bind="currentEvent.Name" /></td>
+    </tr>
+    <tr>
+        <td><label>Date:</label></td>
+        <td><input type="date" @bind="currentEvent.Date" /></td>
+    </tr>
+    <tr>
+        <td><label>Location:</label></td>
+        <td><input @bind="currentEvent.Location" /></td>
+    </tr>
+    <tr>
+        <td><label>Details:</label></td>
+        <td><textarea @bind="currentEvent.Details"></textarea></td>
+    </tr>
+    </table>
+    <br>
+    <button @onclick="Update">Update</button>
+    <button @onclick="GoToRegistration">Go to Registration</button>
+    <button @onclick="GoToEventList">Back to Event List</button>
