@@ -1,0 +1,11 @@
+image: mcr.microsoft.com/dotnet/sdk:8.0
+
+pages:
+  script:
+    - dotnet publish -c Release -o dist
+    - mv dist/wwwroot public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
