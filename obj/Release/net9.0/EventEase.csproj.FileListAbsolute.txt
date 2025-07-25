@@ -199,8 +199,6 @@ C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\dotnet.runtime.
 C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\icudt_CJK.tjcz0u77k5.dat
 C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat
 C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat
-C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\EventEase.bdmrfakorx.wasm
-C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\EventEase.9rb8cjytf7.pdb
 C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\blazor.boot.json
 C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\blazor.webassembly.js.gz
 C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\Microsoft.AspNetCore.Authorization.phaa9r44xv.wasm.gz
@@ -403,8 +401,6 @@ C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\dotnet.runtime.
 C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\icudt_CJK.tjcz0u77k5.dat.gz
 C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat.gz
 C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat.gz
-C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\EventEase.bdmrfakorx.wasm.gz
-C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\EventEase.9rb8cjytf7.pdb.gz
 C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\blazor.boot.json.gz
 C:\Users\Larry L\EventEase\bin\Release\net9.0\EventEase.staticwebassets.runtime.json
 C:\Users\Larry L\EventEase\bin\Release\net9.0\EventEase.staticwebassets.endpoints.json
@@ -1070,9 +1066,6 @@ C:\Users\Larry L\EventEase\obj\Release\net9.0\compressed\2cv14cvn0i-ctf2q9h8m2.g
 C:\Users\Larry L\EventEase\obj\Release\net9.0\compressed\75trfcm43w-tjcz0u77k5.gz
 C:\Users\Larry L\EventEase\obj\Release\net9.0\compressed\lfiq0gid4h-tptq2av103.gz
 C:\Users\Larry L\EventEase\obj\Release\net9.0\compressed\y62acmnqwm-lfu7j35m59.gz
-C:\Users\Larry L\EventEase\obj\Release\net9.0\compressed\gqx5ofl3a7-bdmrfakorx.gz
-C:\Users\Larry L\EventEase\obj\Release\net9.0\compressed\lw84d9mf51-9rb8cjytf7.gz
-C:\Users\Larry L\EventEase\obj\Release\net9.0\compressed\pqrel3z3dc-z3d06245ot.gz
 C:\Users\Larry L\EventEase\obj\Release\net9.0\staticwebassets.build.json
 C:\Users\Larry L\EventEase\obj\Release\net9.0\staticwebassets.build.json.cache
 C:\Users\Larry L\EventEase\obj\Release\net9.0\staticwebassets.development.json
@@ -1082,3 +1075,14 @@ C:\Users\Larry L\EventEase\obj\Release\net9.0\EventEase.dll
 C:\Users\Larry L\EventEase\obj\Release\net9.0\refint\EventEase.dll
 C:\Users\Larry L\EventEase\obj\Release\net9.0\EventEase.pdb
 C:\Users\Larry L\EventEase\obj\Release\net9.0\ref\EventEase.dll
+C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\EventEase.72q68cb578.wasm
+C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\EventEase.qxmuowiwzh.pdb
+C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\EventEase.72q68cb578.wasm.gz
+C:\Users\Larry L\EventEase\bin\Release\net9.0\wwwroot\_framework\EventEase.qxmuowiwzh.pdb.gz
+C:\Users\Larry L\EventEase\bin\Release\net9.0\dist\web.config
+C:\Users\Larry L\EventEase\bin\Release\net9.0\dist\EventEase.staticwebassets.endpoints.json
+C:\Users\Larry L\EventEase\bin\Release\net9.0\dist\wwwroot\sample-data\weather.json
+C:\Users\Larry L\EventEase\bin\Release\net9.0\dist\wwwroot\_framework\blazor.boot.json
+C:\Users\Larry L\EventEase\obj\Release\net9.0\compressed\gqx5ofl3a7-72q68cb578.gz
+C:\Users\Larry L\EventEase\obj\Release\net9.0\compressed\lw84d9mf51-qxmuowiwzh.gz
+C:\Users\Larry L\EventEase\obj\Release\net9.0\compressed\pqrel3z3dc-3whjic72lz.gz

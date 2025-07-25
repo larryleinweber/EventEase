@@ -2,13 +2,7 @@ image: mcr.microsoft.com/dotnet/sdk:8.0
 
 pages:
   script:
-    - echo "🔎 Starting GitLab CI Debug Build"
-    - dotnet --version
-    - pwd
-    - ls -la
     - dotnet publish -c Release -o dist
-    - ls dist
-    - ls dist/wwwroot
     - mv dist/wwwroot public
   artifacts:
     paths:

@@ -1,1 +1,5 @@
+C:\Users\Larry L\EventEase\dist\dist\web.config
+C:\Users\Larry L\EventEase\dist\dist\EventEase.staticwebassets.endpoints.json
+C:\Users\Larry L\EventEase\dist\dist\wwwroot\sample-data\weather.json
+C:\Users\Larry L\EventEase\dist\dist\wwwroot\_framework\blazor.boot.json
 C:\Users\Larry L\EventEase\dist\web.config
